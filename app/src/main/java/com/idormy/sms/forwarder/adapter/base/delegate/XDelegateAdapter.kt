@@ -14,8 +14,8 @@ import com.alibaba.android.vlayout.DelegateAdapter
  * @author xuexiang
  * @since 2020/3/20 12:17 AM
  */
-@Suppress("unused", "WRONG_TYPE_PARAMETER_NULLABILITY_FOR_JAVA_OVERRIDE")
-abstract class XDelegateAdapter<T, V : RecyclerView.ViewHolder?> : DelegateAdapter.Adapter<V> {
+@Suppress("unused")
+abstract class XDelegateAdapter<T, V : RecyclerView.ViewHolder> : DelegateAdapter.Adapter<V> {
     /**
      * 数据源
      */
@@ -36,7 +36,7 @@ abstract class XDelegateAdapter<T, V : RecyclerView.ViewHolder?> : DelegateAdapt
     }
 
     constructor(data: Array<T>?) {
-        if (data != null && data.isNotEmpty()) {
+        if (!data.isNullOrEmpty()) {
             mData.addAll(listOf(*data))
         }
     }
@@ -180,7 +180,7 @@ abstract class XDelegateAdapter<T, V : RecyclerView.ViewHolder?> : DelegateAdapt
      */
     @SuppressLint("NotifyDataSetChanged")
     fun refresh(array: Array<T>?): XDelegateAdapter<*, *> {
-        if (array != null && array.isNotEmpty()) {
+        if (!array.isNullOrEmpty()) {
             mData.clear()
             mData.addAll(listOf(*array))
             selectPosition = -1
@@ -212,7 +212,7 @@ abstract class XDelegateAdapter<T, V : RecyclerView.ViewHolder?> : DelegateAdapt
      */
     @SuppressLint("NotifyDataSetChanged")
     fun loadMore(array: Array<T>?): XDelegateAdapter<*, *> {
-        if (array != null && array.isNotEmpty()) {
+        if (!array.isNullOrEmpty()) {
             mData.addAll(listOf(*array))
             notifyDataSetChanged()
         }
