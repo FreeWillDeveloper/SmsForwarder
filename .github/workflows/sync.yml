@@ -1,0 +1,35 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # 每周日运行一次
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        repository: 'FreeWillDeveloper/SmsForwarder'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add upstream remote
+      run: git remote add upstream https://github.com/pppscn/SmsForwarder.git
+
+    - name: Fetch upstream
+      run: git fetch upstream
+
+    - name: Merge upstream changes
+      run: |
+        git checkout main
+        git merge upstream/main
+
+    - name: Push changes
+      run: git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
