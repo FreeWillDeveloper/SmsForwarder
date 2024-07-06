@@ -15,7 +15,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
     - name: Configure Git
       run: |
@@ -34,9 +34,10 @@ jobs:
         git merge upstream/main --allow-unrelated-histories
 
     - name: Push changes
-      run: git push origin main
+      run: |
+        git push origin main
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
     - name: Debug Git Status
       run: git status
